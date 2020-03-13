@@ -21,6 +21,7 @@ The goals / steps of this project are the following:
     - Summarize the results with a written report
 
 ![alt text][image_0]
+
 ### **Project Rubric Self-Assessment:**
 Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation. 
 
@@ -28,7 +29,7 @@ Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/4
 ---
 **Provide a Writeup / README that includes all the rubric points and how you addressed each one. You can submit your writeup as markdown or pdf. You can use this template as a guide for writing the report. The submission includes the project code.**
 
-You're reading it! and here is a link to my [project code](https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb)
+You're reading it! and here is a link to my [project code](https://github.com/lphucthinh40/cnn_traffic_sign_classifier/blob/master/Traffic-Sign-Detector.ipynb)
 
 #### Data Set Summary & Exploration
 
@@ -37,7 +38,6 @@ You're reading it! and here is a link to my [project code](https://github.com/ud
 I used the numpy library to calculate summary statistics of the traffic
 signs dataset. Here is the result:
 
-<center>
 
 | Dataset    | Size   |
 |------------|--------|
@@ -48,13 +48,12 @@ signs dataset. Here is the result:
 
 Image shape: 32x32          
 Number of unique classes: 43
-</center>
 
 **2. Include an exploratory visualization of the dataset.**
 
 In my jupyter notebook, I displayed an example image for each unique class. I also calculated frequency of each class in the training set and plot a bar chart as below:
 
-<center>![alt text][graph_1]</center>
+![alt text][graph_1]
 
 This information can be useful in training and for further data preparation in the future. We can expect our model to perform better in predicting traffic sign classes that appear more often in the training set. 
 
@@ -69,10 +68,9 @@ To preprocess image data, I used tensorflow.image functions including:
 
 Here is an example of a traffic sign image before and after grayscaling.
 
-<center>
+
 ![alt text][image_1]
 ![alt text][image_2]
-</center>
 
 To generate batches during training and evaluation, I created a dataloader using tensorflow's dataset object. The dataloader will shuffle the dataset, divide it into batches, apply preprocess function (via Dataset.map) for each image before feeding it into our model. Below is the code I used to create the dataloader:
 
@@ -89,8 +87,6 @@ In the future, I will try to add data augmentation as a part of my data input pi
 
 My model architecture is based on the original LeNet-5. The only difference is that, since there are 43 unique classes, my final layer now has 43 output nodes. Below is a description of my model:
 
-<center>
-
 | Layer         		|     Description	        					| 
 |:---------------------:|:---------------------------------------------:| 
 | Input         		| 32x32 Grayscaled image						| 
@@ -106,8 +102,6 @@ My model architecture is based on the original LeNet-5. The only difference is t
 
 ![alt text][image_3]
 LeNet-5 architecture as published in the original paper.
-</center>
-
 
 **3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.**
 
@@ -117,15 +111,11 @@ To train the model, I computed cross-entropy loss, performed Adam optimization a
 
 After training the model through 25 epochs, I obtained the accuracy as follow:
 
-<center>
-
 | Dataset    | Accuracy   |
 |------------|------------|
 | train      | 0.99563    |
 | validation | 0.94467    |
 | test       | 0.91473    |
-
-</center>
 
 I believe there is still a lot that can be done to improve the overal accuracy of my model. One of the reason I did not have enough time to improve the current accuracy was because it took me quite some time to get familiar with Tensorflow 2.0 workflow. I was trying to avoid using Tensorflow-Keras API as well as not relying on tf.compat.v1 to reuse the tensorflow 1.0 code from the previous quiz. I just wanted to write a raw implementation in tensorlow 2.0, using only tensorflow 2.0 supported functions. In the future, I am going to try dropout and regularization along with data augmentation to improve the accuracy of my model.
 
@@ -137,9 +127,7 @@ I actually tried Tensorflow-Keras Sequential API before working on the raw imple
 
 Here are eight German traffic signs that I found on the web:
 
-<center>
 ![alt text][image_4]
-</center>
 
 The 3rd, 7th, and 8th images could be difficult to classify because the traffic signs are not centered and there are also noises and other objects 
 in these images.
@@ -147,8 +135,6 @@ in these images.
 **2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).**
 
 Here are the results of the prediction:
-
-<center>
 
 | Id |                 Image                 |                Predict                |
 |:--:|:-------------------------------------:|:-------------------------------------:|
@@ -161,8 +147,6 @@ Here are the results of the prediction:
 | 7  | Speed limit (30km/h)                  | Road work                             |
 | 8  | Priority road                         | Priority road                         |
 
-</center>
-
 The model was able to correctly guess 5 of the 8 traffic signs, which gives an accuracy of 62.5%. This is much lower than the accuracy on test set. However, we should consider the fact that the traffic signs in many of these images are not well croped and centered.
 
 **3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)**
@@ -171,8 +155,6 @@ The code for making predictions on my final model is located in the last cell of
 
 For the 3rd image, the model made the wrong prediction ('No entry' with 59% certainty). Its second-ranked prediction was actually the correct one, which is 'Stop sign' with 30% certainty. This is not a surprise since after resizing the image to 32x32, it turns out that the round shape of the sign is no longer reserved and the text 'stop' becomes very hard to read. The top five soft max probabilities were:
 
-<center>
-
 | rank | class id |    class name    | probability |
 |:----:|:--------:|:----------------:|-------------|
 | 1    | 17       | No entry         | 0.58927     |
@@ -180,8 +162,6 @@ For the 3rd image, the model made the wrong prediction ('No entry' with 59% cert
 | 3    | 13       | Yield            | 0.06750     |
 | 4    | 12       | Priority road    | 0.03529     |
 | 5    | 33       | Turn right ahead | 0.00235     |
-
-</center>
 
 For the 6th image, the model made the wrong prediction - 'No entry' with 100% certainty - instead of 'General caution'. It appears that even though the traffic sign is recognizable after being resized to 32x32, the fact that there is another instruction sign on the image did interfere with my model's prediction. For the 7th image, the model made the wrong prediction - 'Road work' with 100% certainty - instead of 'Speed limit (30km/h)'. Again, noisy background has caused some problem with my model prediction. A red trafffic sign with green blackground may not preserve a very good contrast after being converted to grayscale.
 
